@@ -62,6 +62,16 @@ The real-APK signature test requires the local APK and signing tool inputs above
 See [installer instructions](installer/README.md) for component selection,
 resume/offline preparation, installation and uninstall behavior.
 
+## Updates
+
+The module's `updateJson` URL is
+https://raw.githubusercontent.com/Henry-Hilton/pixel-launcher-compat/main/update.json.
+See [releases](https://github.com/Henry-Hilton/pixel-launcher-compat/releases) and
+the [changelog](CHANGELOG.md). The 0.5.1 release is a small metadata update for
+the exact tested full bundle; it reuses verified installed apps. Fresh installs
+still require the preparation tool. Install 0.5.1 once and reboot before expecting
+the root manager to detect later updates.
+
 ## Verification and limits
 
 [Device test report](installer/DEVICE-TEST-v0.5.md) records the tested launcher

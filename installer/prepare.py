@@ -12,6 +12,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 
 from mirror import Mirror, MirrorError, Variant, ORIGIN, android_major
+from release import VERSION, module_prop
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -246,12 +247,10 @@ def build(args):
     payload['system/etc/sysconfig/pixel-launcher-compat.xml']=ET.tostring(config,encoding='utf-8',xml_declaration=True)
     for filename in ['android_state.sh','rollback.sh','customize.sh','uninstall.sh','service.sh','action.sh','README.md']:
         payload[filename]=(HERE/filename).read_bytes().replace(b'\r\n',b'\n')
-    payload['module.prop']=('id=pixel_launcher_compat\nname=Pixel Launcher Compatibility Installer\n'
-        'version=0.5.0\nversionCode=5\nauthor=Henry / Codex\n'
-        'description=Android-aware verified downloads, systemless components and journaled rollback. Requires Vector; tested profile only.\n').encode()
+    payload['module.prop']=module_prop()
     checksum_names=[n for n in payload if n.endswith(('.apk','.so')) or n.startswith('permissions/') or n in ['components.tsv','release-lock.json']]
     payload['SHA256SUMS']=(''.join(f'{hashlib.sha256(payload[n]).hexdigest()}  {n}\n' for n in sorted(checksum_names))).encode()
-    out=args.output/'PixelLauncher-Compat-v0.5.0.zip'
+    out=args.output/f'PixelLauncher-Compat-v{VERSION}.zip'
     with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as archive:
         for name,data in sorted(payload.items()):
             info=zipfile.ZipInfo(name)

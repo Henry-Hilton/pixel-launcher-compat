@@ -3,6 +3,8 @@
 !/.gitignore
 !/.gitattributes
 !/README.md
+!/update.json
+!/CHANGELOG.md
 !/build_hook.py
 !/build_overlay.py
 !/build_module.py
@@ -22,3 +24,7 @@
 !/installer/uninstall.sh
 !/installer/service.sh
 !/installer/action.sh
+!/installer/release.py
+!/installer/build_update.py
+!/installer/update_only.sh
+!/installer/test_update.py

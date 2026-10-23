@@ -29,7 +29,7 @@ only the launcher. To choose a subset, use `--components google intelligence pri
 `--sdk 36 --abi arm64-v8a` can select downloads explicitly; connected-device profile
 verification is still required before generating a flashable ZIP.
 
-Outputs: `out/PixelLauncher-Compat-v0.5.0.zip`, `out/release-lock.json`, and a source
+Outputs: `out/PixelLauncher-Compat-v0.5.1.zip`, `out/release-lock.json`, and a source
 selection file. The lock records source pages, SDK, architecture, upload time, package,
 version, file hash, signer fingerprint and service components. Unverified downloads are
 never installed. APK v3/v3.1 certificate rotation is checked using apksig's verified lineage.
@@ -78,6 +78,30 @@ removes the journal, baseline and one-shot helper. Failed cleanup retains state 
 Use root-manager **uninstall**, then reboot. Manually deleting a module folder bypasses
 its uninstall callback. Disabling/safe mode unmounts system files but is a recovery action,
 not a full uninstall; it does not run ownership cleanup. A reboot is required for rollback.
+
+## Root-manager updates
+
+Newly prepared modules contain this `updateJson` URL:
+
+https://raw.githubusercontent.com/Henry-Hilton/pixel-launcher-compat/main/update.json
+
+The 0.5.1 public release ZIP is a metadata-only update for the exact tested 0.5.0
+full bundle. It verifies and retains the installed payload and original rollback
+baseline; it contains no Google APKs. Fresh installs or other component selections
+must use the preparation tool. Install 0.5.1 once and reboot to enable update checks
+in the root manager. Future update availability depends on publishing a newer
+release and increasing the manifest's integer `versionCode`.
+
+Build the small public update artifact from the tested local full ZIP with:
+
+```powershell
+python build_update.py out-full/PixelLauncher-Compat-v0.5.0.zip
+python -m unittest test_installer test_update -v
+```
+
+Keep `release.py`, root `update.json`, release asset name and changelog consistent.
+The updater uses the standard Magisk update JSON schema; root-manager UI support
+is required. The original device-tested package predates this update metadata.
 
 The known 0.1–0.4 prototype can be migrated on the tested phone. Its recorded original
 HOME is the ROM Launcher3, its hook was introduced by the prototype, and the original
