@@ -1,0 +1,24 @@
+# Source-only repository. Device data and downloaded binaries stay local.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/build_hook.py
+!/build_overlay.py
+!/build_module.py
+!/INSTALLER-REQUIREMENTS.md
+!/installer/
+/installer/*
+!/installer/README.md
+!/installer/DEVICE-TEST-v0.5.md
+!/installer/requirements.txt
+!/installer/mirror.py
+!/installer/prepare.py
+!/installer/VerifyApk.java
+!/installer/test_installer.py
+!/installer/android_state.sh
+!/installer/customize.sh
+!/installer/rollback.sh
+!/installer/uninstall.sh
+!/installer/service.sh
+!/installer/action.sh
